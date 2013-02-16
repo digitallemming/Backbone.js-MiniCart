@@ -21,6 +21,48 @@
 			</div>
 		</div>
 
+		<div id="shoppingBaskets" class="shoppingBaskets">
+
+			<form method="post" action="/" class="basketItem">
+				<img src="/img/100.jpg" alt="Product Title" />
+				<h2 class="productName">Product Title</h2>
+				<h2 class="productPrice">&pound;<span>24.95</span></h2>
+				<input type="hidden" name="product_id" value="243" />
+				<input type="text" name="qty" value="1" />
+				<input type="submit" name="addToBasket" value="Add to Cart" />
+			</form>
+
+			<form method="post" action="/" class="basketItem">
+				<img src="/img/100.jpg" alt="Product Title 2" />
+				<h2 class="productName">Product Title 2</h2>
+				<h2 class="productPrice">&pound;<span>99.95</span></h2>
+				<input type="hidden" name="product_id" value="3456" />
+				<input type="text" name="qty" value="1" />
+				<input type="submit" name="addToBasket" value="Add to Cart" />
+			</form>
+
+			<form method="post" action="/" class="basketItem">
+				<img src="/img/100.jpg" alt="Product Title 3" />
+				<h2 class="productName">Product Title 3</h2>
+				<h2 class="productPrice">&pound;<span>6.95</span></h2>
+				<input type="hidden" name="product_id" value="465" />
+				<input type="text" name="qty" value="1" />
+				<input type="submit" name="addToBasket" value="Add to Cart" />
+			</form>
+
+			<form method="post" action="/" class="basketItem">
+				<img src="/img/100.jpg" alt="Product Title 4" />
+				<h2 class="productName">Product Title 4</h2>
+				<h2 class="productPrice">&pound;<span>49.95</span></h2>
+				<input type="hidden" name="product_id" value="132" />
+				<input type="text" name="qty" value="1" />
+				<input type="submit" name="addToBasket" value="Add to Cart" />
+			</form>
+
+		</div>
+
+
+
 		<script id="itemTemplate" type="text/template">
 			<img src="<%= image %>" alt="<%= name %>" title="<%= name %>" />
 			<div class="itemOverview">

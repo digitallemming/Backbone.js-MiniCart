@@ -22,12 +22,13 @@
 		
 		$model = json_decode( stripslashes($_POST['model']) );
 
-		mysql_query( "UPDATE `cart` SET 
-			`name` = '".$model->name."',
-			`image` = '".$model->image."',
-			`itemTotal` = '".$model->itemTotal."',
-			`qty` = '".$model->qty."'
-		WHERE `id` = '".$model->id."'" ) or die( mysql_error() );
+		mysql_query( "REPLACE INTO `cart` VALUES ( 
+			'".$model->id."', 
+			'".$model->image."',
+			'".$model->name."',
+			'".$model->itemTotal."',
+			'".$model->qty."' )
+		" ) or die( mysql_error() );
 
     /**
      *	Add a item to the cart, maybe some sort of quick add

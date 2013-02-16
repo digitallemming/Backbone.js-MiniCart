@@ -3,7 +3,7 @@
     Backbone.emulateHTTP = true;
     Backbone.emulateJSON = true;
 
-    var Product = Backbone.Model.extend( { 
+    var Product = Backbone.Model.extend( {
         defaults: {
             image: "100.jpg",
             name: "",
@@ -15,8 +15,8 @@
         }
     });
 
-    var Cart = Backbone.Collection.extend({
-        model: Product
+    var Cart = Backbone.Collection.extend({ 
+        model: Product 
     });
 
     var ProductView = Backbone.View.extend( {
@@ -68,6 +68,7 @@
             this.updateTotals();
 
             this.collection.on( 'add' , this.updateTotals , this );
+            this.collection.on( 'change' , this.updateTotals , this );
             this.collection.on( 'remove' , this.updateTotals , this );
         },
         render: function() {
@@ -98,10 +99,57 @@
             this.$el.find(".itemsTotal span").html( totalItems );
             this.$el.find(".totalAmt span").html( roundPrice(subTotal) );
 
+        },
+        addProduct: function( item ) {
+
+            var doAddProduct = true;
+
+            // Check if product is already in the cart, if so update the quantity, otherwise add as a new item.
+            if ( this.collection.length > 0 ) {
+
+                _.each( this.collection.models , function( i ) {
+                    if ( item.id == i.get('id') ) {
+                        doAddProduct = false;
+                        var qty = i.get('qty') + item.qty;
+                        i.set( { 'qty' : qty } ).save();
+                    }
+                } , this );
+
+            }
+
+            if ( doAddProduct ) {
+                cartContents.push( item );
+                this.collection.create( item );
+            }
+
+            this.render();
+        }
+    });
+
+    var AddToBasketView = Backbone.View.extend({
+        el: $('#shoppingBaskets'),
+        events: {
+            "submit .basketItem" : "addToCart"
+        },
+        addToCart: function( e ) {
+            e.preventDefault();
+
+            var $elem = $(e.currentTarget);
+
+            var newModel = {};
+            newModel['id'] = $elem.find('input[name="product_id"]').val();
+            newModel['image'] = $elem.find('img').attr('src');
+            newModel['name'] = $elem.find('.productName').html();
+            newModel['itemTotal'] = parseFloat( $elem.find('.productPrice span').html() );
+            newModel['qty'] = parseInt( $elem.find('input[name="qty"]').val() , 10 );
+            
+            shoppingCart.addProduct( newModel );
+
         }
     });
 
     var shoppingCart = new CartView();
+    var addToBasket = new AddToBasketView();
 
 } (jQuery));
 
